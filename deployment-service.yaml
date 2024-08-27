@@ -14,12 +14,12 @@ spec:
     spec:
       containers:
         - name: configserver
-          image: emreoytun/config-server:latest # Updated image to private DockerHub image
+          image: emreoytun/config-server:latest
           imagePullPolicy: Always
           ports:
-            - containerPort: 8080
+            - containerPort: 8079  # Updated to match the application's port
       imagePullSecrets:
-        - name: regcred # Reference to the Docker registry secret
+        - name: regcred
 ---
 apiVersion: v1
 kind: Service
@@ -30,6 +30,6 @@ spec:
     app: configserver
   ports:
     - protocol: "TCP"
-      port: 80
-      targetPort: 8080 
+      port: 80             # Port exposed by the service
+      targetPort: 8079     # Port on which the application is listening
   type: LoadBalancer
